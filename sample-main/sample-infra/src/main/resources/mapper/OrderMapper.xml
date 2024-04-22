@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hixtrip.sample.infra.db.mapper.OrderMapper">
+
+    <!-- 插入新订单 -->
+    <insert id="insertOrder" parameterType="com.hixtrip.sample.infra.db.dataobject.OrderDO">
+        INSERT INTO `order` (
+            `id`, `userId`, `skuId`, `amount`, `money`, `payTime`,
+            `payStatus`, `delFlag`, `createBy`, `createTime`, `updateBy`, `updateTime`
+        ) VALUES (
+                     #{id}, #{userId}, #{skuId}, #{amount}, #{money}, #{payTime},
+                     #{payStatus}, #{delFlag}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime}
+                 )
+    </insert>
+
+    <!-- 根据订单号查询订单 -->
+    <select id="getOrderById" parameterType="java.lang.Long" resultType="com.hixtrip.sample.infra.db.dataobject.OrderDO">
+        SELECT `id`, `userId`, `skuId`, `amount`, `money`, `payTime`,
+               `payStatus`, `delFlag`, `createBy`, `createTime`, `updateBy`, `updateTime` FROM `order` WHERE `id` = #{id}
+    </select>
+
+    <!-- 查询所有订单 -->
+    <select id="getAllOrders" resultType="com.hixtrip.sample.infra.db.dataobject.OrderDO">
+        SELECT `id`, `userId`, `skuId`, `amount`, `money`, `payTime`,
+               `payStatus`, `delFlag`, `createBy`, `createTime`, `updateBy`, `updateTime` FROM `order`
+    </select>
+
+    <!-- 根据条件查询订单 -->
+    <select id="findOrdersByUserId" parameterType="java.lang.String" resultType="com.hixtrip.sample.infra.db.dataobject.OrderDO">
+        SELECT * FROM `order` WHERE `userId` = #{userId}
+    </select>
+
+    <!-- 更新订单信息 -->
+    <update id="updateOrder" parameterType="com.hixtrip.sample.infra.db.dataobject.OrderDO">
+        UPDATE `order`
+        SET `userId` = #{userId}, `skuId` = #{skuId}, `amount` = #{amount}, `money` = #{money},
+            `payTime` = #{payTime}, `payStatus` = #{payStatus}, `delFlag` = #{delFlag},
+            `updateBy` = #{updateBy}, `updateTime` = #{updateTime}
+        WHERE `id` = #{id}
+    </update>
+
+</mapper>
